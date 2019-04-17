@@ -122,7 +122,6 @@ separable by the petal length and width, but versicolor and virginica
 are a little tricky.
 
 #+ATTR_LATEX: :width .5\textwidth
-#+RESULTS:
 [[file:iris.png]]
 
 - We can, however, see that versicolor and virginica could probably be
