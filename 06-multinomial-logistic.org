@@ -100,7 +100,7 @@
     :END:
 
 #+ATTR_LATEX: :width \textwidth
-[[file:/Users/mcawesomegary/Dropbox/writing/talks-2018/20181030-hi-conf-mltute/iris_petal_sepal.png]]
+[[file:iris_petal_sepal.png]]
 
 ***                                                                   :BMCOL:
     :PROPERTIES:
@@ -123,7 +123,7 @@ are a little tricky.
 
 #+ATTR_LATEX: :width .5\textwidth
 #+RESULTS:
-[[file:/Users/mcawesomegary/Dropbox/writing/talks-2018/20181030-hi-conf-mltute/iris.png]]
+[[file:iris.png]]
 
 - We can, however, see that versicolor and virginica could probably be
   separated well by a logistic classifier, but then it will mix up setosa (single turn on curve)
