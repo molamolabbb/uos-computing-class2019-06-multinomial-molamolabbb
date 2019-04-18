@@ -46,24 +46,29 @@
 
 ** Introduction
 
-- Last week, we looked at classification by logistic
+- Last week, we looked at classification by logistic regression
   - Idea: build a classifier that gives 0 for one class, 1 for a second class
   - Use multiple regression on the input variables, then pass the
     output through a logistic function (turn-on curve)
   - Maximize the classifier by maximizing the log-likelihood function
+  - \(\log L(\beta | x_i, y_i) = y_i \log f(x_i, \beta) + (1-y_i) \log (1 - f(x_i, \beta))\)
+  - That is, \(f(x_i, \beta)\) is being interpreted as classifier's probability for \(x_i\) belonging to class 1, so we maximized \\
+    if \(y_i=1\), \(\log L(\beta | x_i, 1) = \log f(x_i, \beta)\), \\
+    if \(y_i=0\), \(\log L(\beta | x_i, 0) = \log(1 - f(x_i, \beta))\) \\
+    where \(f(x_i, \beta) = \frac{1}{1 + e^{- x_i \cdot \beta}}\)
 - We were restricted to looking at two categories
 - Today, we will build on this to classify into several categories
 - First, lets talk about regularization
 
 ** Regularization
 
-- Should have seen last week that the gradient descent is very
-  sensitive to the initial parameters
-- Due to large, difficult phase space when taking these measurement
-  with additional random errors thrown in
+- Should have seen in the last weeks that the gradient descent can be
+  very sensitive to the initial parameters
+- Due to large, difficult phase space when maximizing the functions
+  over hundreds of measurements with additional random errors thrown in
 - To deal with this, and tame the beast, we can /regularize/ the model
   - That is, add additional terms to the likelihood to control the
-    size of the parameters, or tame instabilities and prevent overfitting
+    size of the parameters, tame instabilities and prevent overfitting
 - Today we will look at implementing /ridge regression/, then we will
   talk about /multinomial regression/ or multi-label regression
 
@@ -162,7 +167,7 @@ are a little tricky.
 - We also have the requirement that the probability must sum to 1
   - \(P(0) + P(1) + \ldots + P(k-1) = 1\)
 - Thus, for the reference \(P(0) = 1 - \sum_{i \neq 0} P(i) = 1 - P(0) \sum_{i \neq 0} e^{\beta_i \cdot x}\)
-- Rearranging gives \(P(0) = \frac{1}{1 + \sum_{i \neq 0} e^{\beta_i \cdot x_i}}\), which gives \(P(i) = \frac{e^{\beta_i \cdot x_i}}{1 + \sum_{j \neq 0} e^{\beta_j \cdot x_j}}\)
+- Rearranging gives \(P(0) = \frac{1}{1 + \sum_{i \neq 0} e^{\beta_i \cdot x_i}}\), and so \(P(i) = \frac{e^{\beta_i \cdot x_i}}{1 + \sum_{j \neq 0} e^{\beta_j \cdot x_j}}\)
 - So, if we train logistic classifiers to distinguish one category
   against the reference, we can join them all together to form a
   \(k\)-category classifier
@@ -174,7 +179,7 @@ are a little tricky.
 - Take your =logistic_regression_sgd= from last week, and modify it:\\
   =logistic_ridge_regression_sgd(x0, x1, alpha0, kappa, iterations)=
   - The =f= given to the stochastic minimizer should be \(NLL + \kappa |\hat\beta|^2\)
-  - The =df= given to the stochastic minimizer should be \(\grad NLL +
+  - The =df= given to the stochastic minimizer should be \(\nabla NLL +
     2 \kappa \hat\beta\) (note, vector addition)
 - Use =logistic_ridge_regression_sgd= to find beta for the Iris' in
   category 0 vs 1 and 0 vs 2. Check the accuracy and then dump the
