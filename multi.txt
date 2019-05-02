@@ -1,0 +1,2 @@
+reference[0] : 0.666667 
+ reference[2] : 0.953333
